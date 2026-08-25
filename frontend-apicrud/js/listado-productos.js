@@ -32,10 +32,10 @@ async function getProducts() {
 					<img src="${product.imagen}" width="100">
 				</td>
 				<td>
-					<button class="btn btn-warning">
+					<button id="btn-edit" onclick="editDataTable(${i})" class="btn btn-primary">
 						<i class="fas fa-edit"></i>
 					</button>
-					<button class="btn btn-danger">
+					<button id="btn-delete" onclick="deleteDataTable(${i})" class="btn btn-danger">
 						<i class="fas fa-trash"></i>
 					</button>
 				</td>
@@ -44,5 +44,16 @@ async function getProducts() {
 		});
 	} catch (error) {
 		console.error(error);
-	}
+	};
 }
+
+//Funcion para editar algun producto de la tabla
+	// Función para editar algún producto de la tabla
+let editDataTable = (id) => {
+
+}
+
+let deleteDataTable = (id) => {
+
+}
+	
