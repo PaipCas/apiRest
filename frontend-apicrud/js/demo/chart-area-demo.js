@@ -1,6 +1,6 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+Chart.defaults.font.family = 'Nunito, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+Chart.defaults.font.color = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
@@ -11,7 +11,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
     s = '',
-    toFixedFix = function(n, prec) {
+    toFixedFix = function (n, prec) {
       var k = Math.pow(10, prec);
       return '' + Math.round(n * k) / k;
     };
@@ -60,35 +60,36 @@ var myLineChart = new Chart(ctx, {
       }
     },
     scales: {
-      xAxes: [{
+      x: {
+        // Nota: Para usar 'time', debes tener un adaptador de fechas cargado (ej. chartjs-adapter-date-fns)
         time: {
           unit: 'date'
         },
-        gridLines: {
+        grid: {
           display: false,
           drawBorder: false
         },
         ticks: {
           maxTicksLimit: 7
         }
-      }],
-      yAxes: [{
+      },
+      y: {
         ticks: {
           maxTicksLimit: 5,
           padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
+          // En v3 el callback recibe (value, index, ticks)
+          callback: function (value, index, ticks) {
             return '$' + number_format(value);
           }
         },
-        gridLines: {
+        grid: {
           color: "rgb(234, 236, 244)",
           zeroLineColor: "rgb(234, 236, 244)",
           drawBorder: false,
           borderDash: [2],
           zeroLineBorderDash: [2]
         }
-      }],
+      }
     },
     legend: {
       display: false
@@ -108,7 +109,7 @@ var myLineChart = new Chart(ctx, {
       mode: 'index',
       caretPadding: 10,
       callbacks: {
-        label: function(tooltipItem, chart) {
+        label: function (tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
           return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
         }
