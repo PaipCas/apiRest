@@ -7,7 +7,10 @@ const btnLogin = d.querySelector('.btnLogin');
 // Evento al Botón del Formulario
 btnLogin.addEventListener('click', () => {
 	const dataForm = getData();
-	sendData(dataForm);
+
+	if (dataForm) {
+		sendData(dataForm);
+	}
 });
 
 // Función para Validar el Formulario
@@ -26,6 +29,7 @@ const getData = () => {
 		passInput.value = '';
 	} else {
 		alert('El usuario y la contraseña son obligatorios');
+		return null;
 	}
 	console.log(user);
 
@@ -44,10 +48,21 @@ const sendData = async data => {
 			},
 			body: JSON.stringify(data)
 		});
+
+		if (!response.ok) {
+			if (response.status === 401) {
+				alert('El usuario y/o la contraseña son incorrectos');
+			}
+			return;
+		}
+
 		const userLogin = await response.json();
 
-		// console.log(userLogin);
-		alert(`Bienvenido ${userLogin.usuario}`);
+		console.log(userLogin);
+		alert(`Bienvenido ${userLogin.rol}`);
+
+		// Guardar Datos en LocalStorage
+		localStorage.setItem('userLogin', JSON.stringify(userLogin));
 		location.href = './index.html';
 	} catch (error) {
 		console.error(error);
