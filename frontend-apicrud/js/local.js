@@ -10,7 +10,7 @@ d.addEventListener('DOMContentLoaded', () => {
 // Función para Poner el Nombre
 const getUser = () => {
 	const user = JSON.parse(localStorage.getItem('userLogin'));
-	nameUser.textContent = user.rol;
+	nameUser.textContent = user.usuario;
 };
 
 // Evento para el Botón de Logout

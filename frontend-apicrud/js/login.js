@@ -59,7 +59,7 @@ const sendData = async data => {
 		const userLogin = await response.json();
 
 		console.log(userLogin);
-		alert(`Bienvenido ${userLogin.rol}`);
+		alert(`Bienvenido ${userLogin.usuario}`);
 
 		// Guardar Datos en LocalStorage
 		localStorage.setItem('userLogin', JSON.stringify(userLogin));
