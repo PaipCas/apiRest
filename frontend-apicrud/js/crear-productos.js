@@ -66,4 +66,4 @@ const sendDataProduct = async data => {
 	} catch (error) {
 		console.error(error);
 	}
-    };
+};

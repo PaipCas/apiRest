@@ -48,12 +48,75 @@ async function getProducts() {
 }
 
 //Funcion para editar algun producto de la tabla
-	// Función para editar algún producto de la tabla
 let editDataTable = (id) => {
+	let products = [];
+	let productsSave = JSON.parse(localStorage.getItem("datosTabla"));
+	if (productsSave != null) {
+		products = productsSave;
+	}
+	let singleProduct = products[pos];
+	//console.log(singleProduct);
+	localStorage.setItem("productEdit", JSON.stringify(singleProduct));
+	localStorage.removeItem("datosTabla");
+	location.href = "../crear-pro.html"
 
 }
 
-let deleteDataTable = (id) => {
+let deleteDataTable = (pos) => {
+	let products = [];
+	let productsSave = JSON.parse(localStorage.getItem("datosTabla"));
+	if (productsSave != null) {
+		products = productsSave;
+	}
+	let singleProduct = products[pos];
+	//console.log("Producto a eliminar: " + singleProduct.nombre);
+	let IDproduct = {
+		id: singleProduct
+	}
+	let confirmar = confirm(`¿Deseas eliminar ${singleProduct.nombre} ?`);
+	if (confirmar) {
+		sendDeleteProduct(IDproduct);
+	}
 
 }
-	
+let sendDeleteProduct = async (id) => {
+	const url = 'http://localhost:3000/api/productos'
+
+	try {
+		const response = await fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(id)
+		});
+
+		if (respuesta.status === 406) {
+			alert('Los datos enviados no son admitidos');
+		} else {
+			alert("Producto creado exitosamente");
+			location.reload();
+
+		}
+
+	} catch (error) {
+		console.error(error);
+	}
+
+}
+
+let clearDataTable = () => {
+	let rowTable = document.querySelectorAll("#table-pro > tbody > tr");
+	rowTable.forEach((row) => {
+		row.remove();
+	});
+};
+
+let searchProductTable = () => {
+	let products = [];
+	let productsSave = JSON.parse(localStorage.getItem("datosTable"));
+	if (productsSave != null) {
+		products = productsSave;
+
+	}
+}
